@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Mod Hub</title>
+    <link rel="shortcut icon" href="Copilot_20250805_215347.png" type="image/x-icon" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        /* তোমার CSS এখানে আগের মতোই থাকবে */
+        :root {
+            --primary-color: #2e7d32;
+            --primary-dark: #1b5e20;
+            --medium-gray: #ccc;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: sans-serif;
+            background: white;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            max-width: 600px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 20px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .user-actions a {
+            margin-left: 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .user-actions a:hover {
+            color: var(--primary-color);
+        }
+
+        .app-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+        }
+
+        .icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        .info h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.7rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .description,
+        .screenshots {
+            margin-top: 2rem;
+        }
+
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+        }
+
+        .carousel img {
+            width: 200px;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .logo {
+                font-size: 28px;
+                color: var(--primary-color);
+            }
+
+            .search-bar {
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            .user-actions {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .user-actions a {
+                margin-left: 0;
+            }
+
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .carousel img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Mod Hub</a>
+
+                <div class="search-bar">
+                    <input type="text" id="search-barInput" placeholder="Search for apps, games..." />
+                    <button onclick="searchProduct()">Search</button>
+                </div>
+
+                <div class="user-actions">
+                    <a href="#">Sign In</a>
+                    <a href="index.html">HOME</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- App Details -->
+    <main class="container">
+        <section class="app-header">
+            <img id="app-icon" alt="App Icon" class="icon" />
+            <div class="info">
+                <h1 id="app-name"></h1>
+                <p id="developer"></p>
+                <p><strong>Version:</strong> <span id="version"></span></p>
+                <p><strong>Size:</strong> <span id="size"></span></p>
+                <p><strong>Compatibility:</strong> <span id="compatibility"></span></p>
+                <p><strong>Rating:</strong> ⭐ <span id="rating"></span>/5</p>
+                <a id="download-btn" class="download-btn" href="#" download>Download APK</a>
+            </div>
+        </section>
+
+        <section class="description">
+            <h2>About this App</h2>
+            <p id="description"></p>
+        </section>
+
+        <section class="screenshots">
+            <h2>Screenshots</h2>
+            <div class="carousel" id="carousel"></div>
+        </section>
+    </main>
+
+    <script>
+        const appsData = {
+            app1: {
+                id: "app1",
+                name: "prime video",
+                developer: "CleanTech Devs",
+                version: "2.3.1",
+                size: "15 MB",
+                compatibility: "Android 7.0+",
+                icon: "https://via.placeholder.com/100?text=App+Icon",
+                screenshots: [
+                    "https://via.placeholder.com/300x600?text=Screenshot+1",
+                    "https://via.placeholder.com/300x600?text=Screenshot+2",
+                ],
+                rating: 4.5,
+                description:
+                    "Green Scanner is a lightweight and eco-friendly document scanner with OCR features. Scan, save, and share in seconds.",
+                download: "https://drive.google.com/uc?export=download&id=1x2y3zABCDefGhI4567", // Replace with your own
+            },
+        };
+
+        function getAppIdFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("id") || "app1";
+        }
+
+        function loadAppDetails(appId) {
+            const app = appsData[appId];
+            if (!app) {
+                document.body.innerHTML =
+                    "<h2 style='text-align:center;margin-top:50px;'>App not found</h2>";
+                return;
+            }
+
+            document.getElementById("app-icon").src = app.icon;
+            document.getElementById("app-name").textContent = app.name;
+            document.getElementById("developer").textContent = app.developer;
+            document.getElementById("version").textContent = app.version;
+            document.getElementById("size").textContent = app.size;
+            document.getElementById("compatibility").textContent = app.compatibility;
+            document.getElementById("rating").textContent = app.rating;
+            document.getElementById("description").textContent = app.description;
+            document.getElementById("download-btn").href = app.download;
+
+            const carousel = document.getElementById("carousel");
+            carousel.innerHTML = ""; // কারোসেল ক্লিয়ার করো পুরনো ইমেজগুলো
+            app.screenshots.forEach((screenshot) => {
+                const img = document.createElement("img");
+                img.src = screenshot;
+                carousel.appendChild(img);
+            });
+        }
+
+        function searchProduct() {
+            const query = document.getElementById("search-barInput").value.trim().toLowerCase();
+
+            if (!query) {
+                alert("অনুগ্রহ করে সার্চ বক্সে কিছু লিখুন");
+                return;
+            }
+
+            // পেজের নাম ও URL এর ম্যাপিং
+            const pages = {
+                phone: "phone.html",
+                headphones: "headphones.html",
+                laptop: "laptop.html",
+            };
+
+            if (pages.hasOwnProperty(query)) {
+                window.location.href = pages[query];
+            } else {
+                alert("Page পাওয়া যায়নি: " + query);
+            }
+        }
+
+        window.onload = function () {
+            const appId = getAppIdFromURL();
+            loadAppDetails(appId);
+        };
+    </script>
+</body>
+
+</html>
